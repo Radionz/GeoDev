@@ -1,6 +1,6 @@
 angular.module('Welcome')
 
-.controller('WelcomeCtrl', function($scope, GameService, $rootScope, $interval) {
+.controller('WelcomeCtrl', function($scope, GameService, $rootScope, $interval, $timeout) {
 
   $scope.$on("$ionicView.enter", function(event, data){
     GameService.getGames($scope).then(function(response) {
@@ -14,6 +14,20 @@ angular.module('Welcome')
       $scope.games = games;
     });
   });
+
+  function postDigest(callback){
+    var unregister = $rootScope.$watch(function(){
+      unregister();
+      $timeout(function(){
+        callback();
+        postDigest(callback);
+      },0,false);
+    });
+  }
+
+  postDigest(function(){
+    $('.profilePicture').initial();
+  })
 
   $scope.alreadyIn = function (game) {
     var alreadyIn = false;

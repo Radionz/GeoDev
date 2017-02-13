@@ -13,6 +13,18 @@
                 <span class="input-label">Password</span>
                 <input type="password" placeholder="Password" ng-model="user.password">
             </label>
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Team
+              </div>
+              <select ng-model="user.team">
+                <option value="blue" selected>Blue</option>
+                <option value="green" >Green</option>
+                <option value="red" >Red</option>
+                <option value="yellow" >Yellow</option>
+                <option value="pink">Pink</option>
+              </select>
+            </label>
         </div>
         <button class="button button-block button-positive" ng-click="signUp(user)">
             Sign up

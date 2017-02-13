@@ -313,7 +313,7 @@ angular.module('Game')
     questionPopUp = null;
 
     $scope.$on("newPosition", function(event, latlng){
-
+      console.log("onNewPos");
       // Update player position
       angular.forEach($scope.game.scoreBoard, function(scoreBoardEntry){
         if(scoreBoardEntry.user._id == $rootScope.loggedInUser._id){
@@ -324,10 +324,10 @@ angular.module('Game')
 
           GameService.putScoreBoardEntry($scope.game, scoreBoardEntry).then(function(response){
           });
-          return;
         }
       });
 
+      console.log($scope.game);
       // Check you're in question circle
       angular.forEach($scope.game.questionsBody, function(question) {
 
@@ -335,9 +335,11 @@ angular.module('Game')
 
         var distance = google.maps.geometry.spherical.computeDistanceBetween(latlng, questionPosition);
 
-        $scope.data = {};
+        console.log(question._id)
         console.log(!open ,!isQuestionAnswered(question._id, $rootScope.loggedInUser._id) , distance <= question.radius);
         if(!open && !isQuestionAnswered(question._id, $rootScope.loggedInUser._id) && distance <= question.radius){
+
+          $scope.data = {};
 
           open = true;
 
@@ -425,7 +427,28 @@ angular.module('Game')
           console.log(scoreBoardEntry);
           GameService.putScoreBoardEntry($scope.game, scoreBoardEntry).then(function(response){
             $scope.game = response.data;
+
+            $scope.game.questionsBody = [];
+          angular.forEach($scope.game.questions, function(questionId) {
+            QuestionService.getQuestion(questionId).then(function(response) {
+              var question = response.data;
+              $scope.game.questionsBody.push(question);
+
+              angular.forEach($scope.game.scoreBoard, function(player) {
+                angular.forEach(player.questionsAnswered, function(questionAnswered) {
+                  if (questionAnswered.questionId == question._id) {
+                    questionAnswered.questionBody = question;
+                  }
+                });
+              });
+
+              question.clue_image_url = ServerEndpoint.url + "/question/" + question._id + "/clue_image";
+
+              addQuestionToMap(question);
+            });
           });
+          });
+
           return;
         }
       });
@@ -509,6 +532,8 @@ angular.module('Game')
           watchId = navigator.geolocation.watchPosition( function(position){
             var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             map.panTo(latlng);
+          console.log("newPos");
+
             $scope.$emit("newPosition",latlng);
             marker.setPosition(latlng);
             clearInterval(animationInterval);
