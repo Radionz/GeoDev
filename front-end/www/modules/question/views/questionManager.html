@@ -1,0 +1,115 @@
+<ion-view view-title="Question manager">
+  <ion-content>
+    <div class="row responsive-md">
+      <div class="col-33">
+        <div class="card">
+          <div class="item item-divider item-icon-right" style=" background-color: #e2e5ea;">
+            <i class="icon ion-help"></i>
+            Create a new question
+          </div>
+          <div class="item item-text-wrap">
+            <div class="list">
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Name</span>
+                <input type="text" placeholder="Name" ng-model="question.name">
+              </label>
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Question</span>
+                <input type="text" placeholder="Question" ng-model="question.question">
+              </label>
+              <div class="item">
+                <p>Answer to the question can be a text answer or a picture (choose below)</p>
+              </div>
+              <ion-list>
+                <ion-radio ng-model="question.answerType" ng-value="'Text'">Text answer</ion-radio>
+                <ion-radio ng-model="question.answerType" ng-value="'Picture'">Picture</ion-radio>
+              </ion-list>
+              <label ng-show="question.answerType == 'Text'" class="item item-input item-floating-label">
+                <span class="input-label">Answer</span>
+                <input type="text" placeholder="Answer" ng-model="question.answer">
+              </label>
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Points</span>
+                <input type="number" placeholder="Points" ng-model="question.nb_point">
+              </label>
+              <label class="fileUpload item-input  button button-block button-positive" style="margin : 10px 0px;">
+                <i class="icon ion-image"></i>
+                <span>Send a clue image</span>
+                <input class="upload button button-block button-positive" style="margin-left : 0px;" type="file" accept="image/*" id="questionImage">
+              </label>
+
+              <!-- <input class="fileUpload button button-block button-positive" style="margin-left : 0px;" type="file" name="pic" accept="image/*" ng-model="question.nb_point">
+              <button class="item item-input button button-block button-positive">
+                Send a clue image
+              </button> -->
+              <div class="item">
+                <p>You can click on the map to get longitude and latitude</p>
+              </div>
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Longitude</span>
+                <input type="text" placeholder="Longitude" ng-model="question.loc.coordinates[0]">
+              </label>
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Latitude</span>
+                <input type="text" placeholder="Latitude" ng-model="question.loc.coordinates[1]">
+              </label>
+              <div class="item range range-positive">
+                <i class="icon ion-arrow-resize"></i>
+                <input type="range" name="question-radius" min="10" max="1000" value="150" ng-model="question.radius">
+                <span style="width: 60px;">{{question.radius}} meters</span>
+              </div>
+            </div>
+          </div>
+          <div class="item item-divider">
+            <button type="submit" class="button button-full button-balanced" ng-click="createQuestion(question)">Create !</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- /col-33 -->
+      <div class="col-67">
+        <div class="card">
+          <div class="item item-divider" style=" background-color: #e2e5ea;">
+            Question's map
+          </div>
+          <div class="item" style="padding: 5px;">
+            <div id="map" data-tap-disabled="true"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="item item-divider" style=" background-color: #e2e5ea;">
+            Question's list
+          </div>
+          <div class="item item-text-wrap">
+            <ul class="list">
+              <li class="item"  ng-repeat="question in questions">
+                <div class="row">
+                  <div class="col-80">
+                    <h2>{{question.name}} ({{question.nb_point}} pts)</h2>
+                    <p>Question: {{question.question}}</p>
+                    <p>Answer type: {{question.answerType}}</p>
+                    <p ng-show="question.answerType == 'Text'">Answer: {{question.answer}}</p>
+                    <p>location: {{question.loc.coordinates[0]}}/{{question.loc.coordinates[1]}}</p>
+                    <p>radius: {{question.radius}} meters</p>
+                  </div>
+                  <div class="col-20">
+                    <img ng-show="question.clue_image_url" src="{{question.clue_image_url}}" alt="Clue image" style="width : 100%;">
+                  </div>
+                </div>
+
+
+                <button class="button icon-left ion-trash-a button-small button-assertive pull-right" style="float: right; margin-right: 16px;" ng-click="deleteQuestion(question._id, $index)">Delete</button>
+                <button class="button icon-left ion-pinpoint button-small button-calm pull-right" style="float: right; margin-right: 16px;" ng-click="centerOnQuestion(question.loc.coordinates)">Center on map</button>
+                <div style="clear: both;"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+      <!-- /col-67  -->
+    </div>
+    <!-- /row -->
+  </ion-content>
+</ion-view>

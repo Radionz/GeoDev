@@ -1,0 +1,43 @@
+{
+  "name": "GeoGame",
+  "version": "0.0.1",
+  "description": "Jeu de piste géolocalisé sous forme d'une web app hybride basé sur Ionic v1",
+  "author": "Dorian BLANC <blanc.dorian.pro@gmail.com>",
+  "contributors": [
+    {
+      "name": "Dorian Blanc",
+      "email": "blanc.dorian.pro@gmail.com"
+    },
+    {
+      "name": "Yann Guidez",
+      "email": ""
+    },
+    {
+      "name": "Manuel Pavone",
+      "email": ""
+    }
+  ],
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Radionz/GeoGame"
+  },
+  "keywords": [
+    "polytech",
+    "programmable web",
+    "mini-projet",
+    "game",
+    "GeoGame"
+  ],
+  "dependencies": {
+    "body-parser": "^1.9.2",
+    "busboy": "^0.2.14",
+    "express": "^4.14.0",
+    "formidable": "^1.1.1",
+    "mongoose": "^4.7.6",
+    "multer": "^1.3.0",
+    "socket.io": "^1.7.2"
+  },
+  "devDependencies": {},
+  "license": "MIT"
+}

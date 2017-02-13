@@ -1,0 +1,88 @@
+<ion-modal-view ng-controller="ChatPopupCtrl" name="chatModal">
+  <ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">Chat in ({{game.name}})</h1>
+    <button class="button button-clear button-primary" ng-click="modalChat.hide()">Back to game</button>
+  </ion-header-bar>
+
+  <link md-href="styles/chat.css" rel="stylesheet">
+
+  <ion-content scroll="false">
+
+      <ion-view class="left-view" hide-nav-bar="true">
+        <ion-content>
+          <list>
+            <div class="item item-divider user-list-divider">
+              Room Users
+            </div>
+            <div ng-repeat="user in users">
+              <a class="item item-avatar" ng-class="{'{{board.user.team}}-team-chat' : board.user.team != ''}">
+                <img ng-if="user.image == ''" data-name="{{user.name}}" ng-class="{profilePicture: user.image == ''}"/>
+                <img ng-if="user.image != ''" ng-src="{{user.image}}"/>
+                <h2>{{user.name}}</h2>
+                <p>Dernier message</p>
+              </a>
+            </div>
+
+          </list>
+        </ion-content>
+
+        <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
+        </ion-footer-bar>
+      </ion-view>
+
+
+      <ion-view class="right-view">
+        <ion-content class="message-content">
+          <div class="list">
+            <div id="chat-messages" ng-repeat="message in messages track by $index"
+             class="message-wrapper">
+
+
+               <div ng-hide="message.userFrom._id == myId">
+                   <img ng-if="message.userFrom.image == ''" data-name="{{message.userFrom.name}}" ng-class="{profilePicture: message.userFrom.image == ''}" class="profile-pic left"/>
+                   <img ng-if="message.userFrom.image != ''" ng-src="{{message.userFrom.image}}" class="profile-pic left"/>
+
+                   <div class="chat-bubble left">
+                     <div class="message" >
+                       <span>{{ message.text }}</span>
+                     </div>
+                     <div class="message-detail">
+                         <span class="bold">{{message.userFrom.name}}</span>
+                         <span ng-hide="message.isOlderThanOneDay">at {{message.time | date:'HH:mm'}}</span>
+                         <span ng-show="message.isOlderThanOneDay">at {{message.time | date:'dd MMM - HH:mm'}}</span>
+                     </div>
+                   </div>
+               </div>
+               <div ng-show="message.userFrom._id == myId">
+                 <img ng-if="message.userFrom.image == ''" data-name="{{message.userFrom.name}}" ng-class="{profilePicture: message.userFrom.image == ''}" class="profile-pic right"/>
+                 <img ng-if="message.userFrom.image != ''" ng-src="{{message.userFrom.image}}" class="profile-pic right"/>
+                   <div class="chat-bubble right">
+                      <div class="message" >
+                        <span>{{ message.text }}</span>
+                      </div>
+                      <div class="message-detail">
+                          <span class="bold">{{message.userFrom.name}}</span>
+                          <span ng-hide="message.isOlderThanOneDay">at {{message.time | date:'HH:mm'}}</span>
+                          <span ng-show="message.isOlderThanOneDay">at {{message.time | date:'dd MMM - HH:mm'}}</span>
+                      </div>
+                   </div>
+              </div>
+              <div class="cf"></div>
+            </div>
+        </div>
+
+      </ion-content>
+
+      <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Type your message" on-return="sendMessage(); closeKeyboard()" ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()" />
+        </label>
+        <button class="button button-clear" ng-click="sendMessage()">
+          Send
+        </button>
+      </ion-footer-bar>
+
+    </ion-view>
+
+  </ion-content>
+</ion-modal-view>

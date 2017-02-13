@@ -1,0 +1,45 @@
+<ion-view view-title="Welcome to GeoGame {{$root.loggedInUser.name}}">
+  <ion-content>
+    <div class="row">
+      <div class="col">
+        <div class="card game-list">
+          <div class="item item-divider">
+            Choose a game to play GeoGame !
+          </div>
+          <div class="item item-text-wrap">
+            <ul class="list">
+              <div class="container">
+                <li class="item" ng-repeat="game in games" ng-show="game.status == 'STARTED'">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <h2>
+                        <a href="#/app/game/{{game._id}}" ng-show="alreadyIn(game) || !isFull(game)">{{game.name}}</a>
+                        <p ng-show="isFull(game) && !alreadyIn(game)">{{game.name}} FULL (You can't enter this game)</p>
+                      </h2>
+                      <p>{{game.questions.length}} question(s)</p>
+                      <p ng-show="game.status == 'STARTED'">{{game.scoreBoard.length}}/{{game.playerNb}} player(s)</p>
+                      <p ng-show="game.status == 'STARTED'">Started at {{game.started_at | date:'HH:mm'}} ({{game.timeElapsed | date:'HH:mm:ss'}} remaining)</p>
+                    </div>
+                    <div class="col-md-4 game-list-user">
+                      <div class="row">
+                        <div class="col" ng-repeat="board in game.scoreBoard">
+                          <a class="item item-avatar user-in-list" >
+                            <img ng-if="board.user.image == ''" data-name="{{board.user.name}}" ng-class="{profilePicture: board.user.image == ''}"/>
+                            <img ng-if="board.user.image != ''" ng-src="{{board.user.image}}"/>
+
+                          </a>
+                          <h2 ng-class="{'{{board.user.team}}-team' : board.user.team != ''}" class="text-user rounded-frame">{{board.user.name}}</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

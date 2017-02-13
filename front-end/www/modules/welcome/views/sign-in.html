@@ -1,0 +1,30 @@
+<ion-view hide-nav-bar="true" view-title="Sign In">
+    <ion-content padding="true">
+        <div id="main-title">
+            <h1 class="skew-title">
+                <span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span class="last">E</span>
+                &nbsp;
+                <span>T</span><span class="last">O</span>
+            </h1>
+            <h1 class="skew-title">
+                <span class="alt">G</span><span class="alt">E</span><span class="alt">O</span><span class="alt">G</span><span class="alt">A</span><span class="alt">M</span><span class="alt">E</span><span class="alt last"><img style="width: 33px;" src="img/icon-marker.png" alt=""></span>
+            </h1>
+        </div>
+        <form ng-submit="signIn(user)">
+            <div class="list" style="background-color : rgba(255, 255, 255, 0.8);">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Username</span>
+                    <input type="email" placeholder="Username" ng-model="user.username">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Password</span>
+                    <input type="password" placeholder="Password" ng-model="user.password">
+                </label>
+            </div>
+            <button type="submit" class="button button-block button-positive">Sign in</button>
+        </form>
+        <p class="text-center">
+            <a href="#/app/sign-up">Sign up</a>&nbsp&nbsp<a href="#/app/forgot-password">Forgot password ?</a>
+        </p>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,13 @@
+<ion-view view-title="">
+
+  <ion-tabs class="tabs-striped tabs-top tabs-background-stable">
+
+    <div id="chat-messages" ng-repeat="chatroom in chatrooms"
+     class="message-wrapper">
+        <ion-tab title="{{chatroom.name}}" href="#/app/chat/{{chatroom.name}}">
+
+        </ion-tab>
+    </div>
+  </ion-tabs>
+  <ion-nav-view name="chatroom"></ion-nav-view>
+</ion-view>

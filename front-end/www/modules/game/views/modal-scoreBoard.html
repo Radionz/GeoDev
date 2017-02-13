@@ -1,0 +1,15 @@
+<ion-modal-view ng-controller="GameCtrl">
+  <ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">Score Board ({{game.name}})</h1>
+    <button class="button button-clear button-primary" ng-click="modalScoreBoard.hide()">Back to game</button>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+      <li class="item item-icon-left" ng-repeat="scoreBoardEntry in game.scoreBoard | orderBy:'-score'">
+        <i class="icon ion-trophy balanced" ng-show="$index == 0"></i>
+        <h2>{{$index + 1}} -- {{scoreBoardEntry.user.name}} <span ng-show="scoreBoardEntry.user._id == $root.loggedInUser._id"> (me)</span></h2>
+        <p>{{scoreBoardEntry.score}} points</p>
+      </li>
+    </div>
+  </ion-content>
+</ion-modal-view>

@@ -1,0 +1,93 @@
+<ion-view view-title="Game manager">
+  <ion-content>
+    <div class="row responsive-md">
+      <div class="col-33">
+        <div class="card">
+          <div class="item item-divider item-icon-right" style=" background-color: #e2e5ea;">
+            <i class="icon ion-map"></i>
+            Game's list
+          </div>
+          <div class="item item-text-wrap">
+            <ul class="list">
+              <li class="item"  ng-repeat="game in games">
+                <h2>{{game.name}}</h2>
+                <p>{{game.questions.length}} question(s)</p>
+                <p>{{game.duration}} minutes</p>
+                <p ng-show="game.status == 'STARTED'">{{game.scoreBoard.length}}/{{game.playerNb}} player(s)</p>
+                <ul ng-show="game.status == 'STARTED'" >
+                  <li ng-repeat="scoreBoardEntry in game.scoreBoard"><p style="margin-left : 16px;">{{scoreBoardEntry.user.name}}</p></li>
+                </ul>
+                <p ng-show="game.status == 'STARTED'">Started at {{game.started_at | date:'HH:mm'}} ({{game.timeElapsed | date:'HH:mm:ss'}} remaining)</p>
+                <span class="badge badge-calm">Status: {{game.status}}</span>
+
+                <br>
+                <button class="button icon-left ion-trash-a button-small button-assertive pull-right" style="float: right; margin-right: 16px;" ng-show="game.status == 'NOT_STARTED' || game.status == 'ENDED'" ng-click="deleteGame(game._id, $index)">Delete</button>
+                <button class="button icon-left ion-log-in button-small button-balanced pull-right" style="float: right; margin-right: 16px;" ng-show="game.status == 'NOT_STARTED' || game.status == 'ENDED'" ng-click="startGame(game, $index)">Start</button>
+                <button class="button icon-left ion-log-out button-small button-assertive pull-right" style="float: right; margin-right: 16px;" ng-show="game.status == 'STARTED'" ng-click="stopGame(game, $index)">Stop</button>
+                <button class="button icon-left ion-edit button-small button-calm pull-right" style="float: right; margin-right: 16px;" ng-show="game.status == 'NOT_STARTED'" ng-click="updateGameInForm(game, $index)">Modify</button>
+
+                <div style="clear: both;"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-67">
+        <div class="card">
+
+          <div ng-hide="formGame._id" class="item item-divider" style=" background-color: #e2e5ea;">
+            Create a new game
+          </div>
+          <div ng-show="formGame._id" class="item item-divider" style=" background-color: #e2e5ea;">
+            Update an existing game
+          </div>
+
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Name</span>
+            <input type="text" placeholder="Name" ng-model="formGame.name">
+          </label>
+
+          <div class="item item-divider" style=" background-color: #e2e5ea;">
+            Questions
+          </div>
+          <div class="item">
+            <ion-list>
+              <div  ng-repeat="question in questions">
+                <ion-checkbox ng-model="question.checked" ng-change="questionSelected()">
+                  <h2>{{question.name}} ({{question.nb_point}} pts)</h2>
+                  <span>Question: {{question.question}}</span>
+                  <span>Answer: {{question.answer}}</span>
+                  <div style="clear: both;"></div>
+                </ion-checkbox>
+              </div>
+            </ion-list>
+          </div>
+          <div class="item item-divider">
+            Settings
+          </div>
+          <div class="item item-text-wrap">
+            <div class="list">
+              <div class="item range range-positive">
+                <i class="icon ion-ios-clock-outline"></i>
+                <input type="range" name="duration" min="30" max="120" value="90" ng-change="computeHourAndMinutes()" ng-model="formGame.duration">
+                <span style="width: 60px;">{{formGame.duration}} min</span>
+              </div>
+              <div class="item range range-positive">
+                <i class="icon ion-ios-people"></i>
+                <input type="range" name="nb_player" min="2" max="15" value="5" ng-model="formGame.playerNb">
+                <span style="width: 60px;">{{formGame.playerNb}} pers</span>
+              </div>
+            </div>
+          </div>
+          <div class="item item-divider">
+            <button type="submit" class="button button-full button-balanced" ng-hide="formGame._id" ng-click="createGame(formGame)">Create !</button>
+            <button type="submit" class="button button-full button-calm" ng-show="formGame._id" ng-click="updateGame(formGame)">Update !</button>
+            <button class="button icon-left ion-close-round button-small button-assertive pull-right" style="float: right" ng-show="formGame._id" ng-click="initForm()">Clear form</button>
+          </div>
+        </div>
+
+      </div>
+      <!-- /col-67  -->
+    </div>
+  </ion-content>
+</ion-view>

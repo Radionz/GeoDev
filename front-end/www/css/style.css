@@ -1,0 +1,210 @@
+/* Empty. Add your own CSS if you like */
+#map {
+  height: 300px;
+}
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+  display:none;
+}
+
+/* Accordion */
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+
+.scroll-content {
+  background: url(../img/bg-city.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* MAIN TITLE & SKAW TITLE */
+#main-title {
+  padding-top: 50px;
+  padding-bottom: 30px;
+  margin-bottom: 24px;
+}
+.skew-title {
+  padding: 5px 0px;
+  display: block;
+  text-align: center;
+  font-size: 25px;
+}
+.skew-title span {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 50px;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  font-family: 'roboto condensed';
+  font-weight: 700;
+  font-size: 35.714285714285715px;
+  line-height: 50px;
+  -webkit-transform: skewY(-15deg);
+  transform: skewY(-15deg);
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  cursor: default;
+}
+.skew-title span:after,
+.skew-title span:before {
+  display: block;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 50px;
+  position: absolute;
+  background: #077595;
+  content: ' ';
+  z-index: -1;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.skew-title span:before {
+  background: transparent;
+  -webkit-transform: skewY(15deg);
+  transform: skewY(15deg);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+.skew-title span:nth-child(even) {
+  background-color: #06637f;
+  -webkit-transform: skewY(15deg);
+  transform: skewY(15deg);
+  -webkit-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+  color: #d9d9d9;
+}
+.skew-title span:nth-child(even):after {
+  background-color: #06637f;
+}
+.skew-title span:nth-child(even):before {
+  -webkit-transform-origin: 100% 0;
+  transform-origin: 100% 0;
+  -webkit-transform: skewY(-15deg);
+  transform: skewY(-15deg);
+}
+.skew-title span.flat {
+  -webkit-transform: skewY(0);
+  transform: skewY(0);
+  color: #fff;
+}
+.skew-title span.flat:before {
+  -webkit-transform: skewY(0);
+  transform: skewY(0);
+}
+.skew-title span.flat:nth-child(even):after {
+  background-color: #077595;
+}
+.skew-title span.alt:after {
+  background-color: #2f65c2;
+}
+.skew-title span.alt:nth-child(even):after {
+  background-color: #2856a5;
+}
+.skew-title span.alt.flat:nth-child(even):after {
+  background-color: #2f65c2;
+}
+
+/* file upload button */
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+}
+.fileUpload input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+@media (min-width:961px) {
+  .game-list {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto
+  }
+}
+
+@media (min-width:1025px) {
+  .game-list {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto
+  }
+}
+
+.game-list-user {
+  text-align: center;
+}
+
+.user-in-list {
+  border: 0px;
+  padding-right: 0px;
+}
+
+.text-user {
+  margin-top: 0px;
+}
+
+.blue-team {
+  background-color: #209FFF;
+  color: white;
+}
+
+.yellow-team {
+  background-color: #FFBF00;
+  color: black;
+}
+
+.red-team {
+  background-color: #FF0000;
+  color: white;
+}
+
+.green-team {
+  background-color: #4D9221;
+  color: white;
+}
+
+.pink-team {
+  background-color: #FF7FBF;
+  color: white;
+}
+
+.rounded-frame {
+  border-radius : 10px;
+  margin-left: 10px;
+}
+
+.popup-container .popup {
+  width: 500px;
+}
+
+.popup-sub-title {
+    font-size: 25px;
+}
