@@ -127,7 +127,7 @@ router.put('/:gameId/scoreBoardEntry/:userId', function(req, res, next) {
           }
         }
         game.scoreBoard[i].loc = req.body.loc;
-
+        game.scoreBoard[i].score = req.body.score;
       }
     }
     game.save();

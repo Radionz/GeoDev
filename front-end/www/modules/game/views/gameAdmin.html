@@ -65,13 +65,13 @@
                 Answers from {{scoreBoardEntry.user.name}}
               </div>
               <div class="item" style="padding: 5px;">
-                <li class="item" ng-repeat="questionAnswered in scoreBoardEntry.questionsAnswered">
+                <li class="item" ng-repeat="questionAnswered in scoreBoardEntry.questionsAnswered" ng-show="questionAnswered.status == 'ANSWERED'">
                   <h4>Question : {{questionAnswered.questionBody.question}}</h4>
                   <h4 ng-show="questionAnswered.questionBody.answerType == 'Text'">Answer : {{questionAnswered.questionBody.answer}}</h4>
-                  <p ng-show="questionAnswered.questionBody.answerType == 'Text'">Answer from  {{scoreBoardEntry.user.name}} : {{questionAnswered.answer}}</p>
+                  <p ng-show="questionAnswered.questionBody.answerType == 'Text'">Answer from  {{C.user.name}} : {{questionAnswered.answer}}</p>
                   <img ng-show="questionAnswered.questionBody.answerType == 'Picture'" src="{{questionAnswered.answer}}" alt="image answer">
-                  <button class="button icon-left ion-close-round button-small button-assertive pull-right" style="float: right; margin-right: 16px;" ng-click="">Wrong answer</button>
-                  <button class="button icon-left ion-checkmark-round button-small button-balanced pull-right" style="float: right; margin-right: 16px;" ng-click="">Right answer</button>
+                  <button class="button icon-left ion-close-round button-small button-assertive pull-right" style="float: right; margin-right: 16px;" ng-click="invalidateReponse(game, scoreBoardEntry, questionAnswered)">Wrong answer</button>
+                  <button class="button icon-left ion-checkmark-round button-small button-balanced pull-right" style="float: right; margin-right: 16px;" ng-click="validateReponse(game, scoreBoardEntry, questionAnswered)">Right answer</button>
                 </li>
 
               </div>

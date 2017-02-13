@@ -768,7 +768,7 @@ angular.module('Game')
     }
   })
 
-  .controller('GameAdminCtrl', function($scope, $interval, GameService, QuestionService, ServerEndpoint) {
+  .controller('GameAdminCtrl', function($scope, $rootScope, $interval, GameService, QuestionService, ServerEndpoint) {
 
     var image_question = {
       url: 'img/question_marker.png',
@@ -812,20 +812,21 @@ angular.module('Game')
       }
       markers = [];
 
-      clearInterval(interval);
-      interval = setInterval(function () {
-        GameService.getGame(game._id).then(function(response) {
-          $scope.game = response.data;
-        });
-        for (var i = 0; i < players.length; i++) {
-          players[i].setMap(null);
-        }
-        players = [];
-
-        angular.forEach(game.scoreBoard, function(player) {
-          addPlayerToMap(player);
-        });
-      },30000);
+      // TRACK USER LOCATION
+      // clearInterval(interval);
+      // interval = setInterval(function () {
+      //   GameService.getGame(game._id).then(function(response) {
+      //     $scope.game = response.data;
+      //   });
+      //   for (var i = 0; i < players.length; i++) {
+      //     players[i].setMap(null);
+      //   }
+      //   players = [];
+      //
+      //   angular.forEach(game.scoreBoard, function(player) {
+      //     addPlayerToMap(player);
+      //   });
+      // },30000);
 
       game.questionsBody = [];
       angular.forEach(game.questions, function(questionId) {
@@ -865,6 +866,40 @@ angular.module('Game')
         $( "input[placeholder='Latitude']" ).val(event.latLng.lat());
         $( "input[placeholder='Latitude']" ).siblings('span').addClass('has-input');
       });
+    }
+
+    $scope.invalidateReponse = function(game, scoreBoardEntry, questionAnswered) {
+
+      angular.forEach(scoreBoardEntry.questionsAnswered, function(questionA) {
+        if (questionA.questionBody._id == questionAnswered.questionBody._id) {
+          questionA.status = "INVALID";
+        }
+      });
+
+      console.log(questionAnswered.questionBody);
+      console.log(scoreBoardEntry);
+
+      GameService.putScoreBoardEntry(game, scoreBoardEntry).then(function(response){
+      });
+    }
+
+    $scope.validateReponse = function(game, scoreBoardEntry, questionAnswered) {
+
+      angular.forEach(scoreBoardEntry.questionsAnswered, function(questionA) {
+        if (questionA.questionBody._id == questionAnswered.questionBody._id) {
+          questionA.status = "VALID";
+        }
+      });
+
+      console.log(questionAnswered.questionBody);
+      scoreBoardEntry.score += questionAnswered.questionBody.nb_point
+
+      console.log(scoreBoardEntry);
+
+      GameService.putScoreBoardEntry(game, scoreBoardEntry).then(function(response){
+      });
+
+
     }
 
     function addPlayerToMap(player) {
